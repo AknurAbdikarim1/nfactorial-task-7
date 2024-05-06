@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: azure;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label, input {
+            display: block;
+            margin-top: 5px;
+        }
+        input[type="text"], input[type="email"], input[type="submit"] {
+            width: 200px;
+        }
+        img {
+            max-width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+    <img id="event-image" src="" alt="Event Image">
+    <h1 id="event-name">Event Name</h1>
+    <p id="event-description">Event Description</p>
+    <p><strong>Date:</strong> <span id="event-date"></span></p>
+    <p><strong>Location:</strong> <span id="event-location"></span></p>
+    <p><strong>Tickets Available:</strong> <span id="event-tickets"></span></p>
+
+    <form onsubmit="registerForEvent(); return false;">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" required>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const event = urlParams.get('event'); // It gets the event type from URL
+
+            const eventData = {
+                'oyufest': {
+                    name: 'OYU fest',
+                    description: 'Join us for an evening and meet your favourite artists like Dequine and The dude on the guitar. OYU fest is being held for the Nth time since establishment. Our guests are Aikyn, Dequine, The dude on the guitar, Marghaba Sabi, and many more celebrities.',
+                    date: 'May 20, 2024',
+                    location: 'Almaty Arena',
+                    image: 'https://cdn.kino.kz/partners-events/OYUFest/p1192x597.webp', 
+                    tickets: 200
+                },
+                'marathon': {
+                    name: 'Almaty Marathon',
+                    description: 'Participate in the Annual Almaty Marathon! We will start the race from Kok Tobe and finish at Abai. You can participate in 10, 22, and 42 km races. Join us, choose healthy life.',
+                    date: 'June 5, 2024',
+                    location: 'Kok Tobe',
+                    image: 'https://www.almaty-marathon.kz/userdata/news/news_678/b_image.jpg', 
+                    tickets: 150
+                },
+                'auyl': {
+                    name: 'Auyl Restaurant Opening',
+                    description: 'Attend the opening ceremony of the ethnic restaurant Auyl and try Kazakh cuisine. Try national dish bauyrsak with great souse out of milk and fruits. And dance Kara Zhorga.',
+                    date: 'June 25, 2024',
+                    location: 'Al-Farabi',
+                    image: 'https://qazaqauyl.com/img/f30d6ab5e6103eae.jpg', 
+                    tickets: 10
+                }
+            };
+
+            const details = eventData[event];
+            if (details) {
+                document.getElementById('event-image').src = details.image;
+                document.getElementById('event-name').textContent = details.name;
+                document.getElementById('event-description').textContent = details.description;
+                document.getElementById('event-date').textContent = details.date;
+                document.getElementById('event-location').textContent = details.location;
+                document.getElementById('event-tickets').textContent = localStorage.getItem(event + '_tickets') || details.tickets;
+            } else {
+                document.getElementById('event-name').textContent = 'Event not found';
+            }
+        });
+
+        function registerForEvent() {
+            const email = document.getElementById('email').value;
+            const event = new URLSearchParams(window.location.search).get('event');
+            const registeredEmails = JSON.parse(localStorage.getItem(event + '_emails') || '[]');
+            if (registeredEmails.includes(email)) {
+                alert('This email has already been used to register for this event.');
+                return;
+            }
+
+            registeredEmails.push(email);
+            localStorage.setItem(event + '_emails', JSON.stringify(registeredEmails));
+
+            let tickets = parseInt(document.getElementById('event-tickets').textContent, 10);
+            if (tickets > 0) {
+                tickets--;
+                localStorage.setItem(event + '_tickets', tickets);
+                document.getElementById('event-tickets').textContent = tickets;
+                alert('You are registered!');
+            } else {
+                alert('Sorry, no tickets available.');
+            }
+        }
+    </script>    
+</body>
+</html>

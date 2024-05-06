@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color:rgb(171, 224, 224);
+        }
+        .event {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+        }
+        .event h2 {
+            color: #0056b3;
+        }
+        .event p {
+            color: #666;
+        }
+        button {
+            background-color: yellowgreen;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upcoming Events</h1>
+    <h3> City: Almaty</h2>
+
+    <div class="event">
+        <h2>OYU fest</h2>
+        <p>Join us for an evening and meet your favourite artits like Dequine and The dude on the guitar.</p>
+        <time>Date: May 20, 2024</time>
+        <p>Location: Almaty Arena</p>
+        <button onclick="location.href='event.html?event=oyufest';">Learn more</button>
+    </div>
+
+    <div class="event">
+        <h2>Almaty Marathon</h2>
+        <p>Participate in the Annual Almaty Marathon!</p>
+        <time>Date: June 5, 2024</time>
+        <p>Location: Kok Tobe</p>
+        <button onclick="location.href='event.html?event=marathon';">Learn more</button>
+    </div>
+
+    <div class="event">
+        <h2>Auyl restaurant opening</h2>
+        <p>Attend the opening ceremony of the ethnic restaurant Auyl and try kazakh cruizine.</p>
+        <time>Date: June 25, 2024</time>
+        <p>Location: Al-Farabi</p>
+        <button onclick="location.href='event.html?event=auyl';">Learn more</button>
+    </div>
+
+</body>
+</html>
